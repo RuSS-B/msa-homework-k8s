@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "6ddbc3e6-e9d8-44a7-bfd9-dcb005937b8b",
+		"name": "Requests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3925179"
+	},
+	"item": [
+		{
+			"name": "Create Car Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"vin\": \"JDK1234567890AABB\", \"plateNumber\": \"CQR573\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/requests",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"requests"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set Request Status",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"vin\": \"JDK1234567890AABB\", \"plateNumber\": \"CQR573\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/requests",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"requests"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show Car Request",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"vin\": \"JDK1234567890AABB\", \"plateNumber\": \"CQR573\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:3331/requests/1",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3331",
+					"path": [
+						"requests",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

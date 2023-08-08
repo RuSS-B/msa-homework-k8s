@@ -1,0 +1,48 @@
+app:
+  name: homework-app
+  baseHost: arch.homework
+  env: production
+  port: 8000
+  portName: web
+  servicePortName: app-service-port
+  servicePort: 8081
+  serviceProtocol: TCP
+  image: russbalabanov/msa_howmework:autoservice-v1.0.6
+  deployment:
+    replicas: 2
+    update:
+      strategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxSurge: 1
+          maxUnavailable: 0
+
+migration:
+  name: autoservice-migration-job
+  image: russbalabanov/msa_homework_migrations:autoservice-v1.0.5
+  ttlSecondsAfterFinished: 10
+  restartPolicy: Never
+  backoffLimit: 4
+
+nginx-ingress:
+  controller:
+    enableSnippets: true
+    service:
+      httpPort:
+        port: 2080
+
+postgresql:
+  hostname: msa-hw-chart-postgresql
+  image:
+    debug: true
+  auth:
+    database: app
+    existingSecret: pg-secret
+    secretKeys:
+      adminPasswordKey: POSTGRES_PASSWORD
+      userPasswordKey: POSTGRES_PASSWORD
+  primary:
+    service:
+      ports:
+        postgresql: 5536
+      type: LoadBalancer

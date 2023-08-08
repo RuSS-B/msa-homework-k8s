@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Release.Name }}-app
+  labels:
+    app: {{.Values.app.name}}
+spec:
+  replicas: {{.Values.app.deployment.replicas}}
+  selector:
+    matchLabels:
+      app: {{.Values.app.name}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.app.name}}
+    spec:
+      containers:
+        - name: {{ .Values.app.image | initials }}
+          image: {{ .Values.app.image }}
+          ports:
+            - name: {{.Values.app.portName}}
+              containerPort: {{.Values.app.port}}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.postgresql.auth.existingSecret }}
+          env:
+            - name: APP_PORT
+              value: "{{ .Values.app.port }}"
+            - name: NODE_ENV
+              value: "{{ .Values.app.env}}"
+            - name: DATABASE_URL
+              value: "postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@{{ .Values.postgresql.hostname}}:{{ .Values.postgresql.primary.service.ports.postgresql}}/{{ .Values.postgresql.auth.database}}?sslmode=disable&search_path=public"
