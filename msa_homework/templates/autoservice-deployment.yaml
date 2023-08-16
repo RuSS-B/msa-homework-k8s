@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{.Release.Name }}-app
+  name: {{ .Values.autoservice.name }}
   labels:
-    app: {{.Values.app.name}}
+    app: {{ .Values.autoservice.name }}
 spec:
   replicas: {{.Values.app.deployment.replicas}}
   selector:
     matchLabels:
-      app: {{.Values.app.name}}
+      app: {{ .Values.autoservice.name }}
   template:
     metadata:
       labels:
-        app: {{.Values.app.name}}
+        app: {{ .Values.autoservice.name }}
     spec:
       containers:
         - name: {{ .Values.app.image | initials }}
           image: {{ .Values.app.image }}
           ports:
-            - name: {{.Values.app.portName}}
-              containerPort: {{.Values.app.port}}
+            - name: {{.Values.web.name}}
+              containerPort: {{.Values.autoservice.containerPort}}
           envFrom:
             - secretRef:
                 name: {{ .Values.postgresql.auth.existingSecret }}

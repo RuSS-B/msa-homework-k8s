@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.auth.name }}
+  labels:
+    app: {{ .Values.auth.name }}
+spec:
+  replicas: {{.Values.auth.replicas}}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: {{ .Values.auth.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.auth.name }}
+    spec:
+      containers:
+        - name: {{ .Values.auth.image | initials }}
+          image: {{ .Values.auth.image }}
+          ports:
+            - name: {{.Values.web.name}}
+              containerPort: {{.Values.auth.containerPort}}
+          envFrom:
+            - secretRef:
+                name: {{ .Values.postgresql.auth.existingSecret }}
+          env:
+            - name: APP_PORT
+              value: "{{ .Values.auth.port }}"
+            - name: NODE_ENV
+              value: "{{ .Values.auth.env}}"
+            - name: DATABASE_URL
+              value: "postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@{{ .Values.postgresql.hostname}}:{{ .Values.postgresql.primary.service.ports.postgresql}}/{{ .Values.auth.database}}?sslmode=disable&search_path=public"
