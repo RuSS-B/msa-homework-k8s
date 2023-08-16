@@ -6,6 +6,6 @@ spec:
   selector:
     app: {{ .Values.auth.name }} #the app label that service should listen to
   ports:
-    - port: {{ .Values.auth.servicePort }} #the port that will be exposed by the service
-      targetPort: {{ .Values.auth.servicePort }}  #the port that service should listen to
+    - port: {{ .Values.auth.containerPort }} #the port that will be exposed by the service
+      targetPort: {{ .Values.auth.containerPort }}  #the port that service should listen to
   type: ClusterIP

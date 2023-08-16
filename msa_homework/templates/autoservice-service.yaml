@@ -8,7 +8,6 @@ spec:
   selector:
     app: {{ .Values.autoservice.name }} #the app label that service should listen to
   ports:
-    - port: {{ .Values.autoservice.servicePort }} #the port that will be exposed by the service
-      name: {{ .Values.web.name }}
-      targetPort: {{.Values.app.name}}  #the port that service should listen to
+    - port: {{ .Values.autoservice.containerPort }} #the port that will be exposed by the service
+      targetPort: {{.Values.autoservice.containerPort}}  #the port that service should listen to
   type: ClusterIP

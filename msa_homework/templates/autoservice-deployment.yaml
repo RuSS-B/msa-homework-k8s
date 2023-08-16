@@ -5,7 +5,7 @@ metadata:
   labels:
     app: {{ .Values.autoservice.name }}
 spec:
-  replicas: {{.Values.app.deployment.replicas}}
+  replicas: {{.Values.autoservice.replicas}}
   selector:
     matchLabels:
       app: {{ .Values.autoservice.name }}
@@ -15,17 +15,17 @@ spec:
         app: {{ .Values.autoservice.name }}
     spec:
       containers:
-        - name: {{ .Values.app.image | initials }}
-          image: {{ .Values.app.image }}
+        - name: {{ .Values.autoservice.image | initials }}
+          image: {{ .Values.autoservice.image }}
           ports:
-            - name: {{.Values.web.name}}
+            - name: {{.Values.web.name}}-autosrv
               containerPort: {{.Values.autoservice.containerPort}}
           envFrom:
             - secretRef:
                 name: {{ .Values.postgresql.auth.existingSecret }}
           env:
             - name: APP_PORT
-              value: "{{ .Values.app.port }}"
+              value: "{{ .Values.autoservice.containerPort }}"
             - name: NODE_ENV
               value: "{{ .Values.app.env}}"
             - name: DATABASE_URL

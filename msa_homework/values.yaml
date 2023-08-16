@@ -1,9 +1,7 @@
 app:
   name: homework-app
   baseHost: arch.homework
-  image: russbalabanov/msa_howmework:autoservice-v1.0.6
   deployment:
-    replicas: 2
     update:
       strategy:
         type: RollingUpdate
@@ -16,6 +14,8 @@ web:
   name: http
 
 autoservice:
+  replicas: 2
+  image: russbalabanov/msa_howmework:autoservice-v1.0.6
   containerPort: 8081
   servicePort: 8082
   name: autoservice
@@ -30,7 +30,7 @@ auth:
   portName: auth-web
   env: production
   database: auth
-  image: russbalabanov/msa_howmework:auth-v1.0.6
+  image: russbalabanov/msa_howmework:auth-v1.0.8
 
 migration:
   name: autoservice-migration-job

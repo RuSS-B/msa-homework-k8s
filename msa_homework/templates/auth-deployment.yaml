@@ -20,14 +20,14 @@ spec:
         - name: {{ .Values.auth.image | initials }}
           image: {{ .Values.auth.image }}
           ports:
-            - name: {{.Values.web.name}}
+            - name: {{.Values.web.name}}-auth
               containerPort: {{.Values.auth.containerPort}}
           envFrom:
             - secretRef:
                 name: {{ .Values.postgresql.auth.existingSecret }}
           env:
             - name: APP_PORT
-              value: "{{ .Values.auth.port }}"
+              value: "{{ .Values.auth.containerPort }}"
             - name: NODE_ENV
               value: "{{ .Values.auth.env}}"
             - name: DATABASE_URL
