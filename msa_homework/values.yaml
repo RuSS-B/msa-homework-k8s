@@ -30,7 +30,7 @@ auth:
   portName: auth-web
   env: production
   database: auth
-  image: russbalabanov/msa_howmework:auth-v1.0.8
+  image: russbalabanov/msa_howmework:auth-v1.0.10
 
 migration:
   name: autoservice-migration-job
