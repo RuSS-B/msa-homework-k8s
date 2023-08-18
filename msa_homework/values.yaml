@@ -43,12 +43,14 @@ auth:
     name: auth-migration-job
     image: russbalabanov/msa_homework_migrations:auth-v1.0.1
 
-nginx-ingress:
+ingress-nginx:
   controller:
-    enableSnippets: true
     service:
-      httpPort:
-        port: 2080
+      ports:
+        http: 2080
+      enableHttps: false
+      nodePorts:
+        http: 32080
 
 postgresql:
   hostname: msa-hw-chart-postgresql

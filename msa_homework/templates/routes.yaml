@@ -4,7 +4,6 @@ metadata:
   name: {{ .Values.app.name }}
   annotations:
     nginx.ingress.kubernetes.io/auth-url: "http://auth-server.default.svc.cluster.local/auth/verify"
-    nginx.ingress.kubernetes.io/auth-method: "GET"
     nginx.ingress.kubernetes.io/auth-response-headers: x-user-id
 spec:
   ingressClassName: nginx
@@ -12,13 +11,13 @@ spec:
     - host: {{ .Values.app.baseHost }}
       http:
         paths:
-          - path: /auth
-            pathType: Prefix
-            backend:
-              service:
-                name: {{ .Values.auth.name }}
-                port:
-                  number: {{ .Values.auth.containerPort}}
+{{/*          - path: /auth*/}}
+{{/*            pathType: Prefix*/}}
+{{/*            backend:*/}}
+{{/*              service:*/}}
+{{/*                name: {{ .Values.auth.name }}*/}}
+{{/*                port:*/}}
+{{/*                  number: {{ .Values.auth.containerPort}}*/}}
           - path: /
             pathType: Prefix
             backend:
