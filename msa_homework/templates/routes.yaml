@@ -5,6 +5,7 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/auth-url: "http://auth-server.default.svc.cluster.local/auth/verify"
     nginx.ingress.kubernetes.io/auth-method: "GET"
+    nginx.ingress.kubernetes.io/auth-response-headers: x-user-id
 spec:
   ingressClassName: nginx
   rules:

@@ -1,18 +1,18 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ .Values.migration.name }}
+  name: {{ .Values.autoservice.migrations.name }}
 spec:
   template:
     spec:
       containers:
-        - name: {{ .Values.migration.image | initials }}
-          image: {{ .Values.migration.image }}
+        - name: {{ .Values.autoservice.migrations.image | initials }}
+          image: {{ .Values.autoservice.migrations.image }}
           envFrom:
             - secretRef:
                 name: {{ .Values.postgresql.auth.existingSecret }}
           command: ["migrate"]
           args: ["-verbose", "-path", "/db/migrations", "-database", "postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@{{ .Values.postgresql.hostname}}:{{ .Values.postgresql.primary.service.ports.postgresql}}/{{ .Values.postgresql.auth.database}}?sslmode=disable&search_path=public", "up"]
-      restartPolicy:  {{ .Values.migration.restartPolicy }}
-  ttlSecondsAfterFinished: {{ .Values.migration.ttlSecondsAfterFinished }}
-  backoffLimit: {{ .Values.migration.backoffLimit }}
+      restartPolicy:  {{ .Values.app.migration.restartPolicy }}
+  ttlSecondsAfterFinished: {{ .Values.app.migration.ttlSecondsAfterFinished }}
+  backoffLimit: {{ .Values.app.migration.backoffLimit }}

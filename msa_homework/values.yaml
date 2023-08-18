@@ -1,6 +1,11 @@
 app:
   name: homework-app
   baseHost: arch.homework
+  migration:
+    ttlSecondsAfterFinished: 10
+    restartPolicy: Never
+    backoffLimit: 4
+
   deployment:
     update:
       strategy:
@@ -15,7 +20,10 @@ web:
 
 autoservice:
   replicas: 2
-  image: russbalabanov/msa_howmework:autoservice-v1.0.6
+  image: russbalabanov/msa_howmework:autoservice-v1.0.8
+  migrations:
+    name: autoservice-migration-job
+    image: russbalabanov/msa_homework_migrations:autoservice-v1.0.8
   containerPort: 8081
   servicePort: 8082
   name: autoservice
@@ -30,21 +38,10 @@ auth:
   portName: auth-web
   env: production
   database: auth
-  image: russbalabanov/msa_howmework:auth-v1.0.10
-
-migration:
-  name: autoservice-migration-job
-  image: russbalabanov/msa_homework_migrations:autoservice-v1.0.5
-  ttlSecondsAfterFinished: 10
-  restartPolicy: Never
-  backoffLimit: 4
-
-authMigration:
-  name: auth-migration-job
-  image: russbalabanov/msa_homework_migrations:auth-v1.0.1
-  ttlSecondsAfterFinished: 10
-  restartPolicy: Never
-  backoffLimit: 4
+  image: russbalabanov/msa_howmework:auth-v1.0.11
+  migrations:
+    name: auth-migration-job
+    image: russbalabanov/msa_homework_migrations:auth-v1.0.1
 
 nginx-ingress:
   controller:
