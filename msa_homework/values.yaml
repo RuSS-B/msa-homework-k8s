@@ -45,6 +45,8 @@ auth:
 
 ingress-nginx:
   controller:
+    extraArgs:
+      v: 1
     service:
       ports:
         http: 2080
