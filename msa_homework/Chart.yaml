@@ -25,7 +25,7 @@ appVersion: "1.16.0"
 
 dependencies:
   - name: nginx-ingress
-    version: 0.17.0
+    version: 0.18.1
     repository: https://helm.nginx.com/stable
   - name: postgresql
     version: 12.3.2
